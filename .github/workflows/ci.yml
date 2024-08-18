@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        uses: fluentci-io/setup-fluentci@v5
+        with:
+          wasm: true
+          plugin: mongo
+          args: |
+            start
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests
+        run: |
+          fluentci run --wasm devbox run pip install -r requirements.txt
+          devbox run python run.py &
+          sleep 3
+          fluentci run --wasm devbox run python -m unittest
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DB: mongodb://localhost:27017/tasks
+          PORT: 5000
