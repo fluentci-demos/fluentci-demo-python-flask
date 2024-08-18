@@ -172,5 +172,6 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
-
+data/
+.fluentci/mongodb
 # End of https://www.toptal.com/developers/gitignore/api/python
