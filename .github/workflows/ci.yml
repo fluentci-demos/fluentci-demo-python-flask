@@ -21,7 +21,7 @@ jobs:
         run: |
           fluentci run --wasm devbox run pip install -r requirements.txt
           fluentci run --wasm devbox run python run.py &
-          sleep 3
+          sleep 2
           fluentci run --wasm devbox run python -m unittest
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
